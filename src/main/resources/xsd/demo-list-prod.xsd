@@ -1,0 +1,67 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd"/>
+
+    <xsd:element name="FooProductListDemoData" type="OpenCmsFooProductListDemoData"/>
+
+    <xsd:complexType name="OpenCmsFooProductListDemoData">
+        <xsd:sequence>
+            <xsd:element name="FooProductListDemo" type="OpenCmsFooProductListDemo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OpenCmsFooProductListDemo">
+        <xsd:sequence>
+            <xsd:element name="Title" type="OpenCmsString" />
+            <xsd:element name="ItemPerPage" type="OpenCmsString" />
+            <xsd:element name="Category" type="OpenCmsCategory" />
+            <xsd:element name="TypesToCollect" type="OpenCmsDisplayFormatter" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="required"/>
+    </xsd:complexType>
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <resourcebundles>
+                <propertybundle name="vn.foo.core.product.messages" />
+            </resourcebundles>
+            <FieldSettings>
+                <Setting>
+                    <PropertyName>Title</PropertyName>
+                    <Widget>string</Widget>
+                    <RuleRegex>\w{3,}.{0,}</RuleRegex>
+                    <RuleType>error</RuleType>
+                    <Error><![CDATA[%(key.msg.error.Title)]]></Error>
+                    <Mapping>
+                        <MapTo>property:Title</MapTo>
+                        <UseDefault>true</UseDefault>
+                    </Mapping>
+                    <Mapping>
+                        <MapTo>urlName</MapTo>
+                        <UseDefault>true</UseDefault>
+                    </Mapping>
+                </Setting>
+                <Setting>
+                    <PropertyName>ItemPerPage</PropertyName>
+                    <DisplayName><![CDATA[%(key.label.ItemPerPage)]]></DisplayName>
+                    <Description><![CDATA[%(key.label.ItemPerPage.help)]]></Description>
+                </Setting>
+                <Setting>
+                    <PropertyName>TypesToCollect</PropertyName>
+                    <DisplayName><![CDATA[%(key.label.TypesToCollect)]]></DisplayName>
+                    <Description><![CDATA[%(key.label.TypesToCollect.help)]]></Description>
+                    <Synchronization>true</Synchronization>
+                </Setting>
+                <Setting>
+                    <PropertyName>Category</PropertyName>
+                    <DisplayName><![CDATA[%(key.label.Category)]]></DisplayName>
+                    <Description><![CDATA[%(key.label.Category.help)]]></Description>
+                    <Widget>category</Widget>
+                    <WidgetConfig>category=/|onlyleafs=false|selectiontype=single</WidgetConfig>
+                    <Synchronization>true</Synchronization>
+                </Setting>
+            </FieldSettings>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+</xsd:schema>

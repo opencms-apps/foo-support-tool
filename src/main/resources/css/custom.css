@@ -1,0 +1,53 @@
+.cart-info .table > tbody > tr > td, .cart-info .table > tfoot > tr > td {
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 600px) {
+    .cart-info table#cart tbody td .form-control {
+        width: 20%;
+        display: inline !important;
+    }
+
+    .cart-info .actions .btn {
+        width: 36%;
+        margin: 1.5em 0;
+    }
+
+    .cart-info .actions .btn-info {
+        float: left;
+    }
+
+    .cart-info .actions .btn-danger {
+        float: right;
+    }
+
+    .cart-info table#cart thead {
+        display: none;
+    }
+
+    .cart-info table#cart tbody td {
+        display: block;
+        padding: .6rem;
+        min-width: 320px;
+    }
+
+    .cart-info table#cart tbody tr td:first-child {
+        background: #333;
+        color: #fff;
+    }
+
+    .cart-info table#cart tbody td:before {
+        content: attr(data-th);
+        font-weight: bold;
+        display: inline-block;
+        width: 8rem;
+    }
+
+    .cart-info table#cart tfoot td {
+        display: block;
+    }
+
+    .cart-info table#cart tfoot td .btn {
+        display: block;
+    }
+}

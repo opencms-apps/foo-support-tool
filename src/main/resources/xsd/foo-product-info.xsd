@@ -1,0 +1,170 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+<xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd"/>
+
+<xsd:element name="FooProductInfoData" type="OpenCmsFooProductInfoData"/>
+
+<xsd:complexType name="OpenCmsFooProductInfoData">
+    <xsd:sequence>
+        <xsd:element name="FooProductInfo" type="OpenCmsFooProductInfo" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+</xsd:complexType>
+
+<xsd:complexType name="OpenCmsFooProductInfo">
+    <xsd:sequence>
+        <xsd:element name="ProductName" type="OpenCmsString" />
+        <xsd:element name="SKU" type="OpenCmsString" />
+        <xsd:element name="Price" type="OpenCmsString" />
+        <xsd:element name="DiscountedPrice" type="OpenCmsString" />
+        <xsd:element name="Categories" type="OpenCmsDynamicCategory" />
+        <xsd:element name="Thumbnail" type="OpenCmsVfsFile" />
+        <xsd:element name="ShortDesc" type="OpenCmsHtml" />
+
+        <xsd:element name="Image" type="OpenCmsVfsFile" minOccurs="1" maxOccurs="100" />
+
+        <xsd:element name="ContentTitle" type="OpenCmsString" />
+        <xsd:element name="Content" type="OpenCmsHtml" />
+
+        <xsd:element name="FeatureTitle" type="OpenCmsString" />
+        <xsd:element name="Feature" type="OpenCmsHtml" />
+    </xsd:sequence>
+    <xsd:attribute name="language" type="OpenCmsLocale" use="required"/>
+</xsd:complexType>
+
+<xsd:annotation>
+    <xsd:appinfo>
+        <resourcebundles>
+            <propertybundle name="vn.foo.core.product.messages" />
+        </resourcebundles>
+        <tabs>
+            <tab element="ProductName" collapse="false" name="%(key.tab.General)" />
+            <tab element="Image" collapse="false" name="%(key.tab.Galleries)" />
+            <tab element="ContentTitle" collapse="false" name="%(key.tab.Content)" />
+            <tab element="FeatureTitle" collapse="false" name="%(key.tab.Feature)" />
+        </tabs>
+        <searchsettings containerPageOnly="false">
+            <searchsetting element="SKU" searchcontent="true">
+                <solrfield targetfield="foo_sku" sourcefield="*_s"/>
+            </searchsetting>
+            <searchsetting element="Price" searchcontent="true">
+                <solrfield targetfield="foo_price" sourcefield="*_s"/>
+            </searchsetting>
+            <searchsetting element="Categories" searchcontent="true">
+                <solrfield targetfield="foo_categories" sourcefield="*_s"/>
+            </searchsetting>
+            <searchsetting element="ShortDesc" searchcontent="true">
+                <solrfield targetfield="foo_short_desciption" sourcefield="*_s"/>
+            </searchsetting>
+            <searchsetting element="Content" searchcontent="true">
+                <solrfield targetfield="foo_desciption" sourcefield="*_s"/>
+            </searchsetting>
+            <searchsetting element="Feature" searchcontent="true">
+                <solrfield targetfield="foo_feature" sourcefield="*_s"/>
+            </searchsetting>
+        </searchsettings>
+        <FieldSettings>
+            <Setting>
+                <PropertyName>ProductName</PropertyName>
+                <DisplayName><![CDATA[%(key.label.ProductName)]]></DisplayName>
+                <Description><![CDATA[%(key.label.ProductName.help)]]></Description>
+                <Widget>string</Widget>
+                <RuleRegex>^.+$</RuleRegex>
+                <RuleType>error</RuleType>
+                <Error><![CDATA[%(key.msg.error.ProductName)]]></Error>
+                <Mapping>
+                    <MapTo>property:Title</MapTo>
+                    <UseDefault>true</UseDefault>
+                </Mapping>
+                <Mapping>
+                    <MapTo>urlName</MapTo>
+                    <UseDefault>true</UseDefault>
+                </Mapping>
+            </Setting>
+            <Setting>
+                <PropertyName>SKU</PropertyName>
+                <DisplayName><![CDATA[%(key.label.SKU)]]></DisplayName>
+                <Description><![CDATA[%(key.label.SKU.help)]]></Description>
+                <RuleRegex>^.+$</RuleRegex>
+                <RuleType>error</RuleType>
+                <Error><![CDATA[%(key.msg.error.SKU)]]></Error>
+                <Synchronization>true</Synchronization>
+            </Setting>
+            <Setting>
+                <PropertyName>Price</PropertyName>
+                <DisplayName><![CDATA[%(key.label.Price)]]></DisplayName>
+                <Description><![CDATA[%(key.label.Price.help)]]></Description>
+                <RuleRegex>^[-+]?\d+$</RuleRegex>
+                <RuleType>error</RuleType>
+                <Error><![CDATA[%(key.msg.error.Price)]]></Error>
+                <Synchronization>true</Synchronization>
+            </Setting>
+            <Setting>
+                <PropertyName>DiscountedPrice</PropertyName>
+                <DisplayName><![CDATA[%(key.label.DiscountedPrice)]]></DisplayName>
+                <Description><![CDATA[%(key.label.DiscountedPrice.help)]]></Description>
+                <Synchronization>true</Synchronization>
+            </Setting>
+            <Setting>
+                <PropertyName>Categories</PropertyName>
+                <DisplayName><![CDATA[%(key.label.Categories)]]></DisplayName>
+                <Description><![CDATA[%(key.label.Categories.help)]]></Description>
+                <Widget>category</Widget>
+                <WidgetConfig>onlyleafs=false</WidgetConfig>
+                <Search>true</Search>
+                <Synchronization>true</Synchronization>
+            </Setting>
+            <Setting>
+                <PropertyName>Thumbnail</PropertyName>
+                <DisplayName><![CDATA[%(key.label.Thumbnail)]]></DisplayName>
+                <Description><![CDATA[%(key.label.Thumbnail.help)]]></Description>
+                <Widget>imagegallery</Widget>
+                <WidgetConfig>{useformat:true}</WidgetConfig>
+                <Search>false</Search>
+            </Setting>
+            <Setting>
+                <PropertyName>ShortDesc</PropertyName>
+                <DisplayName><![CDATA[%(key.label.ShortDesc)]]></DisplayName>
+                <Description><![CDATA[%(key.label.ShortDesc.help)]]></Description>
+                <Widget>html</Widget>
+                <WidgetConfig><![CDATA[height:400px,link,anchor,source,downloadgallery,formatselect]]></WidgetConfig>
+            </Setting>
+
+            <Setting>
+                <PropertyName>Image</PropertyName>
+                <DisplayName><![CDATA[%(key.label.Image)]]></DisplayName>
+                <Description><![CDATA[%(key.label.Image.help)]]></Description>
+                <Widget>imagegallery</Widget>
+                <WidgetConfig>{useformat:true}</WidgetConfig>
+                <Search>false</Search>
+            </Setting>
+
+            <Setting>
+                <PropertyName>ContentTitle</PropertyName>
+                <DisplayName><![CDATA[%(key.label.ContentTitle)]]></DisplayName>
+                <Description><![CDATA[%(key.label.ContentTitle.help)]]></Description>
+            </Setting>
+            <Setting>
+                <PropertyName>Content</PropertyName>
+                <DisplayName><![CDATA[%(key.label.Content)]]></DisplayName>
+                <Description><![CDATA[%(key.label.Content.help)]]></Description>
+                <Widget>html</Widget>
+                <WidgetConfig><![CDATA[height:400px,link,anchor,source,downloadgallery,formatselect]]></WidgetConfig>
+            </Setting>
+
+            <Setting>
+                <PropertyName>FeatureTitle</PropertyName>
+                <DisplayName><![CDATA[%(key.label.FeatureTitle)]]></DisplayName>
+                <Description><![CDATA[%(key.label.FeatureTitle.help)]]></Description>
+            </Setting>
+            <Setting>
+                <PropertyName>Feature</PropertyName>
+                <DisplayName><![CDATA[%(key.label.Feature)]]></DisplayName>
+                <Description><![CDATA[%(key.label.Feature.help)]]></Description>
+                <Widget>html</Widget>
+                <WidgetConfig><![CDATA[height:400px,link,anchor,source,downloadgallery,formatselect]]></WidgetConfig>
+            </Setting>
+        </FieldSettings>
+    </xsd:appinfo>
+</xsd:annotation>
+
+</xsd:schema>
