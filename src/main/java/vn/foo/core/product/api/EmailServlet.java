@@ -23,9 +23,10 @@ public class EmailServlet extends OpenCmsServlet {
     private static Log log = CmsLog.getLog(EmailServlet.class);
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
         if (req == null || res == null) {
-            log.debug("can't run it now");
+            res.setStatus(404);
+            res.getOutputStream().print(JsonSerializer.object2Json(new Response().denied("can't run it now")));
             return;
         }
         final String email = req.getParameter("email");
@@ -34,7 +35,7 @@ public class EmailServlet extends OpenCmsServlet {
         res.setContentType("application/json;charset=UTF-8");
         if (StringUtils.isAnyBlank(email, subject, content)) {
             res.setStatus(403);
-            res.getWriter().println("Loi 403");
+            res.getOutputStream().print(JsonSerializer.object2Json(new Response().error("Loi 403")));
             return;
         }
 
@@ -84,6 +85,12 @@ public class EmailServlet extends OpenCmsServlet {
         public Response() {
             type = Type.denied;
             msg = "";
+        }
+
+        public Response denied(String msg) {
+            type = Type.denied;
+            this.msg = msg;
+            return this;
         }
 
         public Response success(String msg) {
